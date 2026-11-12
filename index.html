@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enter your date of birth to see your exact age in years, months and days.">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <title>Age Calculator</title>
+
+    <!-- Tailwind CSS v4 (browser build, no install needed) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.11"></script>
+
+    <!-- Self-hosted Poppins font -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- Design tokens from the style guide -->
+    <style type="text/tailwindcss">
+        @theme {
+      --color-purple-500: hsl(259, 100%, 65%);
+      --color-red-400: hsl(0, 100%, 67%);
+      --color-grey-100: hsl(0, 0%, 94%);
+      --color-grey-200: hsl(0, 0%, 86%);
+      --color-grey-500: hsl(0, 1%, 44%);
+      --color-ink: hsl(0, 0%, 8%);
+      --font-poppins: "Poppins", sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-grey-100 font-poppins text-ink">
+    <div
+        class="relative flex min-h-screen flex-col items-center justify-start px-4 pt-[88px] pb-8 md:justify-center md:pt-8">
+
+        <main
+            class="w-full max-w-[840px] rounded-3xl rounded-br-[100px] bg-white px-6 py-12 md:rounded-br-[200px] md:p-14">
+            <h1 class="sr-only">Age calculator</h1>
+
+            <form id="age-form" novalidate>
+                <!-- Date inputs -->
+                <div class="grid grid-cols-3 gap-4 md:grid-cols-[repeat(3,10rem)] md:gap-8">
+
+                    <div class="group" data-field="day">
+                        <label for="day"
+                            class="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-grey-500 group-data-[invalid=true]:text-red-400 md:text-sm">Day</label>
+                        <input id="day" name="day" type="text" inputmode="numeric" maxlength="2" placeholder="DD"
+                            autocomplete="bday-day" aria-describedby="day-error"
+                            class="h-14 w-full rounded-lg border border-grey-200 px-4 text-xl font-bold text-ink placeholder:text-grey-500 hover:border-purple-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 aria-[invalid=true]:border-red-400 aria-[invalid=true]:ring-0 md:h-[72px] md:px-6 md:text-[32px]">
+                        <p id="day-error" class="mt-2 text-[11px] italic leading-snug text-red-400 md:text-sm" hidden>
+                        </p>
+                    </div>
+
+                    <div class="group" data-field="month">
+                        <label for="month"
+                            class="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-grey-500 group-data-[invalid=true]:text-red-400 md:text-sm">Month</label>
+                        <input id="month" name="month" type="text" inputmode="numeric" maxlength="2" placeholder="MM"
+                            autocomplete="bday-month" aria-describedby="month-error"
+                            class="h-14 w-full rounded-lg border border-grey-200 px-4 text-xl font-bold text-ink placeholder:text-grey-500 hover:border-purple-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 aria-[invalid=true]:border-red-400 aria-[invalid=true]:ring-0 md:h-[72px] md:px-6 md:text-[32px]">
+                        <p id="month-error" class="mt-2 text-[11px] italic leading-snug text-red-400 md:text-sm" hidden>
+                        </p>
+                    </div>
+
+                    <div class="group" data-field="year">
+                        <label for="year"
+                            class="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-grey-500 group-data-[invalid=true]:text-red-400 md:text-sm">Year</label>
+                        <input id="year" name="year" type="text" inputmode="numeric" maxlength="4" placeholder="YYYY"
+                            autocomplete="bday-year" aria-describedby="year-error"
+                            class="h-14 w-full rounded-lg border border-grey-200 px-4 text-xl font-bold text-ink placeholder:text-grey-500 hover:border-purple-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 aria-[invalid=true]:border-red-400 aria-[invalid=true]:ring-0 md:h-[72px] md:px-6 md:text-[32px]">
+                        <p id="year-error" class="mt-2 text-[11px] italic leading-snug text-red-400 md:text-sm" hidden>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Divider + submit button -->
+                <div class="relative mt-8 flex items-center justify-center md:mt-0 md:justify-end">
+                    <hr class="absolute inset-x-0 border-t border-grey-200">
+                    <button type="submit" aria-label="Calculate age"
+                        class="relative grid size-16 cursor-pointer place-items-center rounded-full bg-purple-500 transition-colors duration-200 hover:bg-ink focus-visible:bg-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-500 md:size-24">
+                        <img src="./assets/images/icon-arrow.svg" alt="" class="w-7 md:w-11">
+                    </button>
+                </div>
+            </form>
+
+            <!-- Visual result (hidden from screen readers; the live summary below is read instead) -->
+            <div class="mt-8 whitespace-nowrap text-[clamp(2.5rem,14.5vw,3.5rem)] font-extrabold italic leading-[1.1] md:mt-0 md:text-[104px] md:leading-[1.1] md:[word-spacing:-0.11em]"
+                aria-hidden="true">
+                <p><span id="years" class="text-purple-500">--</span> <span id="years-label">years</span></p>
+                <p><span id="months" class="text-purple-500">--</span> <span id="months-label">months</span></p>
+                <p><span id="days" class="text-purple-500">--</span> <span id="days-label">days</span></p>
+            </div>
+
+            <p id="result-summary" class="sr-only" aria-live="polite"></p>
+        </main>
+
+        <footer class="mt-8 text-center font-sans text-[11px] md:absolute md:inset-x-0 md:bottom-4 md:mt-0">
+            Challenge by <a href="https://www.frontendmentor.io?ref=challenge"
+                class="text-[hsl(228,45%,44%)] underline">Frontend Mentor</a>.
+            Coded by <a href="https://github.com/yasmin3802" class="text-[hsl(228,45%,44%)] underline">Yasmin
+                Sherefa</a>.
+        </footer>
+
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
