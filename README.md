@@ -4,6 +4,8 @@ A responsive age calculator built for the [Frontend Mentor Age Calculator challe
 
 ![Age Calculator app on desktop](screenshots/desktop-result.png)
 
+**Live demo:** https://yasmin3802.github.io/age-calculator-app/
+
 ## Screenshots
 
 ### Mobile
